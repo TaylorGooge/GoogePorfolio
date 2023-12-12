@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "node src/index.js"
+    "start": "node ./src/index.jsx"
   },
   "keywords": [],
   "author": "",
