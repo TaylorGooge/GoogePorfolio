@@ -6,6 +6,7 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { birdrpost, birdrImages, birdrLinks } from "../blog/birdrpost.js";
 import saaspost from "../blog/sasspost.js";
+import {birdrapipost, birdrapiLinks} from "../blog/birdrapipost.js";
 import MarkdownWrapper from "../components/markdown/markdownwrapper";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -25,12 +26,13 @@ const paperStyle = {
 
 
 
-const SaaS = ({ type }) => {
+const BlogPost = ({ type }) => {
   let cols;
 
   if (type===  "birdr") {
     cols = Math.ceil(birdrImages.length / 3) ;
   } 
+
   
   return (
     <>
@@ -83,6 +85,24 @@ const SaaS = ({ type }) => {
               {type === "saas" && (
                 <MarkdownWrapper>{saaspost} </MarkdownWrapper>
               )}
+              {type === "birdrapi" && (
+                <>
+                 
+                  {birdrapiLinks && 
+                    <List style={{ display: 'flex', flexDirection: 'row', padding: 0 }}>
+                      {birdrapiLinks.map((item, index) => (
+                        <ListItem disablePadding key={index}>
+                          <ListItemButton component="a" href={item.link}>
+                            <ListItemText primary={item.name} />
+                          </ListItemButton>
+                        </ListItem>
+                      ))}
+                    </List>
+                  }
+
+                  <MarkdownWrapper>{birdrapipost} </MarkdownWrapper>
+                </>
+              )}
             </Paper>
           </Grid>
         </Grid>
@@ -91,4 +111,4 @@ const SaaS = ({ type }) => {
   );
 };
 
-export default SaaS;
+export default BlogPost;

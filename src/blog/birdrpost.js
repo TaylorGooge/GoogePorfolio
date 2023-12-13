@@ -35,10 +35,7 @@ const birdrLinks=[
     name: "Birdr FrontEnd",
     link: "https://birdr-front-end2-0.vercel.app/"
   },
-  {
-    name: "Birdr Api Code",
-    link: "https://github.com/TaylorGooge/BirdrApi"
-  },
+ 
   {
     name: "Birdr FrontEnd Code",
     link: "https://github.com/TaylorGooge/BirdrFrontEnd2.0"

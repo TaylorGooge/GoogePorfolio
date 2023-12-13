@@ -23,7 +23,7 @@ const paperStyle = {
 
 const projectList = [
   {
-    projectName: "Birdr",
+    projectName: "Birdr React Front End",
     projectImage: "/img/birdr_proj.png",
     projectDescription:
       "Birdr, a novice-friendly birdwatching app born from a passion for nature. Revolutionizing the field, it eliminates barriers, making birding accessible to all without prior expertise, marking a new chapter in nature exploration",
@@ -36,10 +36,16 @@ const projectList = [
       "SaaS platform for early childhood education, streamlining scholarship fund distribution. This dynamic solution automates application processes, ensuring efficient approvals and revisions, catering to both individual users and educational sites",
     projectLink: "/projects/saasproject",
   },
+  {
+    projectName: "Birdr Node.js Api",
+    projectImage: "/img/nodejs.jpg",
+    projectDescription:
+      "Explore how BirdR's Node.js API stands as the foundation of insightful data processing and seamless communication within its microservice architecture, powering intelligent functionalities and facilitating data-driven insights for an enhanced user experience",
+    projectLink: "/projects/birdrapi",
+  },
 ];
 
 const Projects = ({}) => {
-  const [expanded, setExpanded] = React.useState(false);
 
   return (
     <>
