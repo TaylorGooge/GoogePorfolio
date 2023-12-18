@@ -26,12 +26,12 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.19",
     "@mui/material": "^5.14.20",
+    "email-js": "^2.0.2",
     "fs": "^0.0.1-security",
     "install": "^0.13.0",
     "markdown-to-jsx": "^7.3.2",
     "npm": "^10.2.5",
     "react-bootstrap": "^2.9.1",
-
     "react-router-dom": "^6.20.1"
   }
 }
