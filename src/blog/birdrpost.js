@@ -26,6 +26,21 @@ const birdrImages =
       src:'/img/birdr_proj.png',
       alt: 'Birdr Homepage Image'
         
+    },
+    {
+      src:'/img/baseMap.png',
+      alt: 'Birdr Map Image'
+
+    },
+    {
+      src:'/img/baseCard.png',
+      alt: 'Birdr Sighting Card Image'
+
+    },
+    {
+      src:'/img/birdChecklist.png',
+      alt: 'Birdr Checklist Overview Image'
+
     }
   
 ]
