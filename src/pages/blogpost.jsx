@@ -8,12 +8,12 @@ import { birdrpost, birdrImages, birdrLinks } from "../blog/birdrpost.js";
 import saaspost from "../blog/sasspost.js";
 import {birdrapipost, birdrapiLinks} from "../blog/birdrapipost.js";
 import MarkdownWrapper from "../components/markdown/markdownwrapper";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import Carousel from 'react-bootstrap/Carousel';
+import Image from 'react-bootstrap/Image';
 
 const paperStyle = {
   padding: 20,
@@ -31,6 +31,7 @@ const BlogPost = ({ type }) => {
 
   if (type===  "birdr") {
     cols = Math.ceil(birdrImages.length / 3) ;
+  
   } 
 
   
@@ -49,24 +50,21 @@ const BlogPost = ({ type }) => {
              
               {type === "birdr" && (
                 <>
-                  <ImageList
-                    sx={{ width: 500, height: 450 }}
-                    cols={cols}
-                    rowHeight={164}
-                  >
-
+                  {birdrImages && 
+                    <Carousel>
+                      {birdrImages.map((img, index) => (
+                      <Carousel.Item key={index}>
+                        <Image alt={img.alt} src={img.src}/>
+                        <Carousel.Caption>
+                          <h3>{img.alt}</h3>
+                   
+                        </Carousel.Caption>
+                      </Carousel.Item>
+                      ))}
+                    </Carousel>
                  
-                    {birdrImages && birdrImages.map((item, index) => (
-                      <ImageListItem key={index}>
-                        <img
-                          srcSet={`${item.src}?w=240&h=164&fit=crop&auto=format&dpr=2 2x`}
-                          src={`${item.src}?w=164&h=164&fit=crop&auto=format`}
-                          alt={item.alt}
-                          loading="lazy"
-                        />
-                      </ImageListItem>
-                    ))}
-                  </ImageList>
+                  
+                  }
                   {birdrLinks && 
                     <List style={{ display: 'flex', flexDirection: 'row', padding: 0 }}>
                       {birdrLinks.map((item, index) => (
