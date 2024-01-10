@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Nav from "../components/navigation/nav";
 import SideNav from "../components/sidenav/sidenav";
 import Box from "@mui/material/Box";
@@ -10,8 +10,8 @@ import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-
 import Button from "@mui/material/Button";
+import { blogList } from "../api";
 
 const paperStyle = {
   padding: 20,
@@ -21,31 +21,20 @@ const paperStyle = {
   overflowY: "auto",
 };
 
-const projectList = [
-  {
-    projectName: "Birdr React Front End",
-    projectImage: "/img/birdr_proj.png",
-    projectDescription:
-      "Birdr, a novice-friendly birdwatching app born from a passion for nature. Revolutionizing the field, it eliminates barriers, making birding accessible to all without prior expertise, marking a new chapter in nature exploration",
-    projectLink: "/projects/birdr",
-  },
-  {
-    projectName: "EmpowerEdu",
-    projectImage: "/img/reactDefault.jpg",
-    projectDescription:
-      "SaaS platform for early childhood education, streamlining scholarship fund distribution. This dynamic solution automates application processes, ensuring efficient approvals and revisions, catering to both individual users and educational sites",
-    projectLink: "/projects/saasproject",
-  },
-  {
-    projectName: "Birdr Node.js Api",
-    projectImage: "/img/nodejs.jpg",
-    projectDescription:
-      "Explore how BirdR's Node.js API stands as the foundation of insightful data processing and seamless communication within its microservice architecture, powering intelligent functionalities and facilitating data-driven insights for an enhanced user experience",
-    projectLink: "/projects/birdrapi",
-  },
-];
+
 
 const Projects = ({}) => {
+  const [projects, setProjects] = useState([]);
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  const getPosts = async () => {
+  
+    let posts = await blogList("portfolio");
+   
+    setProjects(posts);
+  };
 
   return (
     <>
@@ -60,23 +49,25 @@ const Projects = ({}) => {
           <Grid item xs={8}>
             <Paper style={paperStyle}>
               <Grid container spacing={4}>
-                {projectList.map((p, index) => (
+                {projects.map((p, index) => (
                   <Grid item xs={6} key={index}>
                     <Card sx={{ maxWidth: 345 }}>
-                      <CardHeader title={p.projectName} />
                       <CardMedia
                         component="img"
                         height="194"
-                        image={p.projectImage}
-                        alt={p.projectName}
+                        image={p.featured_image}
+                        alt={p.title}
                       />
                       <CardContent>
+                        <Typography variant="h5" color="text.secondary">
+                          {p.title}
+                        </Typography>
                         <Typography variant="body2" color="text.secondary">
-                          {p.projectDescription}
+                          {p.summary}
                         </Typography>
                       </CardContent>
                       <CardActions disableSpacing>
-                        <Button size="small" href={p.projectLink}>
+                        <Button size="small" href={`projects/${p.slug}`}>
                           Learn More
                         </Button>
                       </CardActions>

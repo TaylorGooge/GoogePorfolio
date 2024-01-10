@@ -10,14 +10,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<Projects />} />
-        <Route path="/projects/birdr" element={<BlogPost type="birdr" />} />
         <Route
-          path="/projects/saasproject"
-          element={<BlogPost type="saas" />}
-        />
-        <Route
-          path="/projects/birdrapi"
-          element={<BlogPost type="birdrapi" />}
+          path="/projects/:slug"
+          element={<BlogPost />}
         />
       </Routes>
     </Router>

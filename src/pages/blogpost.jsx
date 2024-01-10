@@ -1,19 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Nav from "../components/navigation/nav";
 import SideNav from "../components/sidenav/sidenav";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import { birdrpost, birdrImages, birdrLinks } from "../blog/birdrpost.js";
-import saaspost from "../blog/sasspost.js";
-import {birdrapipost, birdrapiLinks} from "../blog/birdrapipost.js";
-import MarkdownWrapper from "../components/markdown/markdownwrapper";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Carousel from 'react-bootstrap/Carousel';
-import Image from 'react-bootstrap/Image';
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+
+import { blogPost } from "../api";
 
 const paperStyle = {
   padding: 20,
@@ -23,18 +18,25 @@ const paperStyle = {
   overflowY: "auto",
 };
 
+const BlogPost = () => {
+  const { slug } = useParams();
+  const [content, setContent] = useState(null);
 
+  useEffect(() => {
+    getPostContent();
+  }, []);
 
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("en-US", options).format(date);
+  };
 
-const BlogPost = ({ type }) => {
-  let cols;
+  const getPostContent = async () => {
+    let post = await blogPost(slug);
+    setContent(post);
+  };
 
-  if (type===  "birdr") {
-    cols = Math.ceil(birdrImages.length / 3) ;
-  
-  } 
-
-  
   return (
     <>
       <Nav />
@@ -46,62 +48,89 @@ const BlogPost = ({ type }) => {
             </Paper>
           </Grid>
           <Grid item xs={8}>
-            <Paper style={paperStyle}>
-             
-              {type === "birdr" && (
-                <>
-                  {birdrImages && 
-                    <Carousel>
-                      {birdrImages.map((img, index) => (
-                      <Carousel.Item key={index}>
-                        <Image alt={img.alt} src={img.src}/>
-                        <Carousel.Caption>
-                          <h3>{img.alt}</h3>
-                   
-                        </Carousel.Caption>
-                      </Carousel.Item>
-                      ))}
-                    </Carousel>
-                 
-                  
+            {!content && <div>Error fetching this post please try again</div>}
+            {content && (
+              <Paper style={paperStyle}>
+                <Paper
+                  sx={{
+                    position: "relative",
+                    backgroundColor: "grey.800",
+                    color: "#fff",
+                    mb: 4,
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    backgroundImage: `url(${content.featured_image})`,
+                  }}
+                >
+                  {
+                    <img
+                      style={{ display: "none" }}
+                      src={content.featured_image}
+                      alt={content.featured_image_alt}
+                    />
                   }
-                  {birdrLinks && 
-                    <List style={{ display: 'flex', flexDirection: 'row', padding: 0 }}>
-                      {birdrLinks.map((item, index) => (
-                        <ListItem disablePadding key={index}>
-                          <ListItemButton component="a" href={item.link}>
-                            <ListItemText primary={item.name} />
-                          </ListItemButton>
-                        </ListItem>
-                      ))}
-                    </List>
-                  }
-                 
-                  <MarkdownWrapper>{birdrpost} </MarkdownWrapper>
-                </>
-              )}
-              {type === "saas" && (
-                <MarkdownWrapper>{saaspost} </MarkdownWrapper>
-              )}
-              {type === "birdrapi" && (
-                <>
-                 
-                  {birdrapiLinks && 
-                    <List style={{ display: 'flex', flexDirection: 'row', padding: 0 }}>
-                      {birdrapiLinks.map((item, index) => (
-                        <ListItem disablePadding key={index}>
-                          <ListItemButton component="a" href={item.link}>
-                            <ListItemText primary={item.name} />
-                          </ListItemButton>
-                        </ListItem>
-                      ))}
-                    </List>
-                  }
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 0,
+                      bottom: 0,
+                      right: 0,
+                      left: 0,
+                      backgroundColor: "rgba(0,0,0,.3)",
+                    }}
+                  />
+                  <Grid container>
+                    <Grid item md={6}>
+                      <Box
+                        sx={{
+                          position: "relative",
+                          p: { xs: 3, md: 6 },
+                          pr: { md: 0 },
+                        }}
+                      >
+                        <Typography
+                          component="h1"
+                          variant="h3"
+                          color="inherit"
+                          gutterBottom
+                        >
+                          {content.title}
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Paper>
 
-                  <MarkdownWrapper>{birdrapipost} </MarkdownWrapper>
-                </>
-              )}
-            </Paper>
+                <Grid
+                  item
+                  xs={12}
+                  md={8}
+                  sx={{
+                    "& .markdown": {
+                      py: 3,
+                    },
+                  }}
+                >
+                  <Typography variant="h2" gutterBottom>
+                    {content.title}
+                  </Typography>
+                  <Divider />
+                  <Typography variant="body1" gutterBottom>
+                    <em>
+                      {" "}
+                      {formatDate(content.created)} by{" "}
+                      {content.author.first_name} {content.author.last_name}
+                    </em>
+                  </Typography>
+
+                  <div
+                    className="blog-content"
+                    dangerouslySetInnerHTML={{ __html: content.body }}
+                  ></div>
+                </Grid>
+              </Paper>
+            )}
           </Grid>
         </Grid>
       </Box>

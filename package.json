@@ -26,6 +26,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.19",
     "@mui/material": "^5.14.20",
+    "axios": "^1.6.5",
     "email-js": "^2.0.2",
     "fs": "^0.0.1-security",
     "install": "^0.13.0",
