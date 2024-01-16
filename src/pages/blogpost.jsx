@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Nav from "../components/navigation/nav";
-import SideNav from "../components/sidenav/sidenav";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
 
 import { blogPost } from "../api";
 
@@ -40,100 +34,58 @@ const BlogPost = () => {
   return (
     <>
       <Nav />
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
-            <Paper style={paperStyle}>
-              <SideNav />
-            </Paper>
-          </Grid>
-          <Grid item xs={8}>
-            {!content && <div>Error fetching this post please try again</div>}
-            {content && (
-              <Paper style={paperStyle}>
-                <Paper
-                  sx={{
-                    position: "relative",
-                    backgroundColor: "grey.800",
-                    color: "#fff",
-                    mb: 4,
-                    backgroundSize: "cover",
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    backgroundImage: `url(${content.featured_image})`,
-                  }}
-                >
-                  {
-                    <img
-                      style={{ display: "none" }}
-                      src={content.featured_image}
-                      alt={content.featured_image_alt}
-                    />
-                  }
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: 0,
-                      bottom: 0,
-                      right: 0,
-                      left: 0,
-                      backgroundColor: "rgba(0,0,0,.3)",
-                    }}
-                  />
-                  <Grid container>
-                    <Grid item md={6}>
-                      <Box
-                        sx={{
-                          position: "relative",
-                          p: { xs: 3, md: 6 },
-                          pr: { md: 0 },
-                        }}
-                      >
-                        <Typography
-                          component="h1"
-                          variant="h3"
-                          color="inherit"
-                          gutterBottom
-                        >
-                          {content.title}
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Paper>
+      {content && (
+        <>
+          <section id="article-header" className="position-relative">
+            <div className="container pt-14 pb-9 pb-lg-11 position-relative">
+              <article className="row pt-lg-7 pb-11">
+                <div className="col-lg-10 col-xl-8">
+                  <div className="position-relative pb-3 pb-lg-0">
+                    <div className="d-flex align-items-center w-100">
+                      {/* <a href="#!" className="badge bg-primary rounded-pill me-3">Tech</a> */}
+                      <small className="text-body-secondary">
+                        {" "}
+                        {formatDate(content.created)}
+                      </small>
+                    </div>
 
-                <Grid
-                  item
-                  xs={12}
-                  md={8}
-                  sx={{
-                    "& .markdown": {
-                      py: 3,
-                    },
-                  }}
-                >
-                  <Typography variant="h2" gutterBottom>
-                    {content.title}
-                  </Typography>
-                  <Divider />
-                  <Typography variant="body1" gutterBottom>
-                    <em>
-                      {" "}
-                      {formatDate(content.created)} by{" "}
-                      {content.author.first_name} {content.author.last_name}
-                    </em>
-                  </Typography>
+                    <div>
+                      <h2 className="my-4 display-4">{content.title}</h2>
+                      <div className="d-flex pt-2 mb-0 small align-items-center">
+                        
+                        <span className="text-body-secondary d-inline-block">
+                          By: 
+                          {content.author.first_name} {content.author.last_name}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+          <section className="position-relative border-bottom">
+            <div className="container pb-9 pb-lg-11">
+              <img
+                src={content.featured_image}
+                alt={content.featured_image_alt}
+                className="img-fluid shadow-lg rounded-4 mb-7 mb-lg-9 position-relative mt-n14"
+              />
 
-                  <div
-                    className="blog-content"
+              <div className="row">
+                <div className="col-xl-9 mx-auto">
+                  <article
+                    className="article mb-9"
                     dangerouslySetInnerHTML={{ __html: content.body }}
-                  ></div>
-                </Grid>
-              </Paper>
-            )}
-          </Grid>
-        </Grid>
-      </Box>
+                  ></article>
+                </div>
+              </div>
+            </div>
+          </section>
+        </>
+      )}
+
+    
     </>
   );
 };

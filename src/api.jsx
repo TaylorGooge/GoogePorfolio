@@ -6,7 +6,7 @@ export const blogList = async (type=null) => {
   let url
   if (type){
      url = `
-    https://api.buttercms.com/v2/posts?auth_token=${read_token}&type=${type}&exclude_body=true`;
+    https://api.buttercms.com/v2/posts?auth_token=${read_token}&category_slug=${type}&exclude_body=true`;
     
   } else {
     url = `

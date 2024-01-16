@@ -1,7 +1,7 @@
 import "./App.css";
 import Home from "./pages/home";
 import BlogPost from "./pages/blogpost";
-import Projects from "./pages/projects";
+import BlogListCom from "./pages/bloglistcom";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 export default function App() {
@@ -9,11 +9,18 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/projects" element={<Projects />} />
         <Route
-          path="/projects/:slug"
-          element={<BlogPost />}
+          path="/projects"
+          element={
+            <BlogListCom type="portfolio" title="Projects" baseUrl="projects" />
+          }
         />
+        <Route
+          path="/blog"
+          element={<BlogListCom type="personal" title="Blog" baseUrl="blog" />}
+        />
+        <Route path="/projects/:slug" element={<BlogPost />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
       </Routes>
     </Router>
   );
