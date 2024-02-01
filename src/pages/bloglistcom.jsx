@@ -37,8 +37,8 @@ const BlogListCom = ({ type, title, baseUrl }) => {
                   <div className="col-md-6 mb-4 grid-item" key={index}>
                     <div className="text-white bg-dark position-relative d-block overflow-hidden card-hover-2">
                       <img
-                        src={card.featured_image}
-                        alt=""
+                        src={card.featuredImage?.url || "/img/bg-blur.svg"}
+                        alt={card.title}
                         className="w-100 img-zoom"
                       />
                       <div className="card-hover-2-overlay position-relative start-0 top-0 w-100 h-100 d-flex px-4 py-5 flex-column justify-content-between">
@@ -46,10 +46,10 @@ const BlogListCom = ({ type, title, baseUrl }) => {
                           <div className="card-hover-2-title">
                             <h5 className="fs-4 mb-2">{card.title}</h5>
                           </div>
-                          <p className="mb-0">{card.summary}</p>
+                          <p className="mb-0">{card.summary ? null : null}</p>
                         </div>
                         <div className="card-hover-2-footer w-100 mt-auto">
-                          <a href={`${baseUrl}/${card.slug}`}>
+                          <a href={`${baseUrl}/${card.id}`}>
                             <span className="card-hover-2-footer-link">
                               <span>Read more</span>
                             </span>

@@ -18,7 +18,11 @@ const About = () => {
               Fullstack Software Developer
             </h2>
             <div className="position-relative z-1">
-              <div className="d-flex mb-5" data-aos="fade-up" data-aos-delay="150">
+              <div
+                className="d-flex mb-5"
+                data-aos="fade-up"
+                data-aos-delay="150"
+              >
                 <div className="me-3">
                   <i className="bx bx-check lh-1 width-3x height-3x flex-center rounded-circle bg-body-tertiary text-primary position-relative fs-4"></i>
                 </div>
@@ -39,7 +43,11 @@ const About = () => {
                 </div>
               </div>
 
-              <div className="d-flex mb-5" data-aos="fade-up" data-aos-delay="200">
+              <div
+                className="d-flex mb-5"
+                data-aos="fade-up"
+                data-aos-delay="200"
+              >
                 <div className="me-3">
                   <i className="bx bx-check lh-1 width-3x height-3x flex-center rounded-circle bg-body-tertiary text-primary position-relative fs-4"></i>
                 </div>

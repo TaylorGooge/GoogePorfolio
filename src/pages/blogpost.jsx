@@ -4,14 +4,6 @@ import Nav from "../components/navigation/nav";
 
 import { blogPost } from "../api";
 
-const paperStyle = {
-  padding: 20,
-  marginTop: 10,
-  marginBottom: 10,
-  height: 700,
-  overflowY: "auto",
-};
-
 const BlogPost = () => {
   const { slug } = useParams();
   const [content, setContent] = useState(null);
@@ -28,7 +20,7 @@ const BlogPost = () => {
 
   const getPostContent = async () => {
     let post = await blogPost(slug);
-    setContent(post);
+    setContent(post[0]);
   };
 
   return (
@@ -45,18 +37,19 @@ const BlogPost = () => {
                       {/* <a href="#!" className="badge bg-primary rounded-pill me-3">Tech</a> */}
                       <small className="text-body-secondary">
                         {" "}
-                        {formatDate(content.created)}
+                        {formatDate(content.publishDate)}
                       </small>
                     </div>
 
                     <div>
                       <h2 className="my-4 display-4">{content.title}</h2>
                       <div className="d-flex pt-2 mb-0 small align-items-center">
-                        
-                        <span className="text-body-secondary d-inline-block">
-                          By: 
-                          {content.author.first_name} {content.author.last_name}
-                        </span>
+                        {content.author && (
+                          <span className="text-body-secondary d-inline-block">
+                            By:
+                            {content.author.firstName} {content.author.lastName}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -67,8 +60,8 @@ const BlogPost = () => {
           <section className="position-relative border-bottom">
             <div className="container pb-9 pb-lg-11">
               <img
-                src={content.featured_image}
-                alt={content.featured_image_alt}
+                src={content.featuredImage?.url || "/img/bg-blur.svg"}
+                alt={content.title}
                 className="img-fluid shadow-lg rounded-4 mb-7 mb-lg-9 position-relative mt-n14"
               />
 
@@ -76,7 +69,7 @@ const BlogPost = () => {
                 <div className="col-xl-9 mx-auto">
                   <article
                     className="article mb-9"
-                    dangerouslySetInnerHTML={{ __html: content.body }}
+                    dangerouslySetInnerHTML={{ __html: content.body.html }}
                   ></article>
                 </div>
               </div>
@@ -84,8 +77,6 @@ const BlogPost = () => {
           </section>
         </>
       )}
-
-    
     </>
   );
 };
